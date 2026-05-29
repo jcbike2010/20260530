@@ -354,7 +354,11 @@ groups.forEach((group, index) => {
   button.type = "button";
   button.textContent = group.title;
   button.title = `前往${group.title}`;
-  button.addEventListener("click", () => showSlide(index, 0));
+  button.addEventListener("click", () => {
+    playing = true;
+    document.getElementById("play").textContent = "暫停";
+    showSlide(index, 0);
+  });
   groupNav.appendChild(button);
 });
 
