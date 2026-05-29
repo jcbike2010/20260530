@@ -387,7 +387,10 @@ function advance() {
   if (currentBatch + 1 < batchCount) {
     showSlide(currentSlide, currentBatch + 1);
   } else {
-    showSlide(currentSlide, 0);
+    playing = false;
+    document.getElementById("play").textContent = "播放";
+    clearTimeout(timer);
+    timer = null;
   }
 }
 
