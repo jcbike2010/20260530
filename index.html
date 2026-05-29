@@ -260,6 +260,126 @@ button {
   0%, 100% { transform: translateY(0) rotate(-1deg); }
   50% { transform: translateY(-8px) rotate(1deg); }
 }
+@media (max-width: 720px), (orientation: portrait) {
+  html, body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  body {
+    display: block;
+    background: linear-gradient(180deg, #fff8e9, #edf9ff);
+  }
+  .deck {
+    width: 100vw;
+    height: 100dvh;
+  }
+  .slide {
+    grid-template-columns: 1fr;
+    grid-template-rows: 28% 1fr;
+    gap: 0;
+    padding: max(16px, env(safe-area-inset-top)) 18px calc(116px + env(safe-area-inset-bottom));
+  }
+  .slide::before {
+    inset: 8px;
+    border-width: 3px;
+    border-radius: 18px;
+  }
+  .slide::after {
+    height: 10px;
+  }
+  .visual {
+    align-content: end;
+    justify-items: center;
+  }
+  .logo-wrap {
+    width: min(72vw, 270px);
+    aspect-ratio: 1 / .78;
+  }
+  .logo {
+    filter: drop-shadow(0 12px 16px rgba(44, 50, 80, .16));
+  }
+  .leaf.a { left: 8%; top: 9%; }
+  .leaf.b { left: 18%; bottom: 16%; }
+  .leaf.c { right: 8%; top: 18%; }
+  .bubble.a { left: 9%; top: 7%; }
+  .bubble.b { right: 9%; top: 10%; }
+  .bubble.c { right: 12%; bottom: 14%; }
+  .content {
+    grid-template-rows: auto auto minmax(250px, 1fr) auto;
+    align-items: start;
+    min-height: 0;
+  }
+  h1 {
+    margin-top: 2px;
+    font-size: clamp(36px, 12vw, 52px);
+    text-shadow: 3px 4px 0 rgba(232, 110, 101, .55);
+  }
+  .subtitle {
+    margin-top: 14px;
+    font-size: clamp(20px, 6vw, 26px);
+    text-underline-offset: 6px;
+  }
+  .member-stage {
+    width: min(92vw, 430px);
+    min-height: 0;
+    height: 100%;
+    margin: 12px auto 0;
+  }
+  .batch {
+    grid-auto-rows: minmax(42px, auto);
+    column-gap: 6%;
+    row-gap: 4%;
+    align-content: center;
+  }
+  .batch.count-7 {
+    row-gap: 2.8%;
+  }
+  .name {
+    min-height: 42px;
+    font-size: clamp(22px, 7vw, 30px);
+    line-height: 1.08;
+  }
+  .single-extra {
+    width: 48%;
+  }
+  .progress {
+    padding-bottom: 0;
+    font-size: 13px;
+  }
+  .dots {
+    gap: 6px;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+  }
+  .toolbar {
+    bottom: max(10px, env(safe-area-inset-bottom));
+    width: calc(100vw - 20px);
+    gap: 6px;
+    opacity: .94;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba(25, 33, 44, .18);
+    backdrop-filter: blur(8px);
+  }
+  .group-nav {
+    width: 100%;
+    gap: 6px;
+  }
+  button {
+    padding: 7px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.1;
+  }
+  .group-button {
+    flex: 1 1 calc(33.33% - 8px);
+    min-width: 0;
+    min-height: 34px;
+    white-space: normal;
+  }
+}
 @media print {
   html, body { width: 100%; height: auto; overflow: visible; background: white; }
   body { display: block; }
