@@ -218,15 +218,27 @@ h1 {
 .dot.on { background: var(--coral); }
 .toolbar {
   position: fixed;
-  right: 16px;
+  left: 50%;
   bottom: 14px;
+  transform: translateX(-50%);
   z-index: 10;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
+  width: min(94vw, 980px);
   opacity: .23;
   transition: opacity 180ms ease;
 }
 .toolbar:hover { opacity: 1; }
+.group-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 button {
   border: 0;
   border-radius: 6px;
@@ -235,6 +247,10 @@ button {
   color: #fff;
   font-weight: 800;
   cursor: pointer;
+}
+.group-button.active {
+  background: linear-gradient(90deg, rgba(120, 178, 85, .94), rgba(71, 169, 154, .94));
+  color: #172132;
 }
 @keyframes nameIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -267,10 +283,8 @@ button {
 <body>
 <main class="deck" id="deck" aria-label="樟樹下分組成員名單簡報"></main>
 <nav class="toolbar" aria-label="簡報控制">
-  <button id="prev" title="上一組">上一組</button>
+  <div class="group-nav" id="groupNav" aria-label="組別選單"></div>
   <button id="play" title="自動播放">暫停</button>
-  <button id="next" title="下一組">下一組</button>
-  <button id="open" title="新視窗播放">新視窗</button>
   <button id="full" title="全螢幕">全螢幕</button>
 </nav>
 <script>
@@ -333,6 +347,16 @@ function makeSlide(group, slideIndex) {
 
 groups.forEach((group, index) => deck.appendChild(makeSlide(group, index)));
 slides = [...document.querySelectorAll(".slide")];
+const groupNav = document.getElementById("groupNav");
+groups.forEach((group, index) => {
+  const button = document.createElement("button");
+  button.className = "group-button";
+  button.type = "button";
+  button.textContent = group.title;
+  button.title = `前往${group.title}`;
+  button.addEventListener("click", () => showSlide(index, 0));
+  groupNav.appendChild(button);
+});
 
 function showBatch(slide, batchIndex) {
   slide.querySelectorAll(".batch").forEach((batch, index) => {
@@ -353,6 +377,7 @@ function showSlide(slideIndex, batchIndex = 0) {
   currentSlide = (slideIndex + slides.length) % slides.length;
   currentBatch = batchIndex;
   slides.forEach((slide, index) => slide.classList.toggle("active", index === currentSlide));
+  document.querySelectorAll(".group-button").forEach((button, index) => button.classList.toggle("active", index === currentSlide));
   showBatch(slides[currentSlide], currentBatch);
   schedule();
 }
@@ -396,10 +421,7 @@ async function enterFullscreen() {
   }
 }
 
-document.getElementById("prev").addEventListener("click", previousSlide);
-document.getElementById("next").addEventListener("click", nextSlide);
 document.getElementById("play").addEventListener("click", togglePlay);
-document.getElementById("open").addEventListener("click", openStandalone);
 document.getElementById("full").addEventListener("click", enterFullscreen);
 document.addEventListener("keydown", (event) => {
   if (["ArrowRight", "PageDown", " "].includes(event.key)) nextSlide();
